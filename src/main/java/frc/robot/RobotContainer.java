@@ -70,7 +70,7 @@ public class RobotContainer {
     tankSubsystem = new TankSubsystem();
 
     // Instantiate commands
-    tankCommand = new DriveTankCommand(tankSubsystem, 0, 0);
+    tankCommand = new DriveTankCommand(tankSubsystem, 12);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -109,7 +109,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
+    // The robot will drive forward for 12 inches in autonomous
     return tankCommand;
   }
 }
