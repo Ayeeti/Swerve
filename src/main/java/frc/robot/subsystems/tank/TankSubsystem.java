@@ -9,11 +9,12 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ControllableSubsystem;
+import frc.robot.PowerController;
 
 import static frc.robot.Constants.TankConstants.*;
 
-public class TankSubsystem extends SubsystemBase {
+public class TankSubsystem extends ControllableSubsystem {
   private final WPI_TalonSRX leftMain;
   private final WPI_TalonSRX leftFollow;
 
@@ -23,6 +24,8 @@ public class TankSubsystem extends SubsystemBase {
   // Motor power output states
   private double leftPower;
   private double rightPower;
+
+  private PowerController powerController;
 
   public TankSubsystem() {
     // Init left main and follower motors
@@ -47,15 +50,18 @@ public class TankSubsystem extends SubsystemBase {
     // Initialize power values
     leftPower = 0;
     rightPower = 0;
+
+    powerController = new PowerController(this);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     // TODO: odometry
+    powerController.check();
 
-    leftMain.set(ControlMode.PercentOutput, leftPower);
-    rightMain.set(ControlMode.PercentOutput, rightPower);
+    leftMain.set(ControlMode.PercentOutput, leftPower * this.getCurrentScale());
+    rightMain.set(ControlMode.PercentOutput, rightPower * this.getCurrentScale());
   }
 
   @Override
@@ -130,5 +136,10 @@ public class TankSubsystem extends SubsystemBase {
    */
   private double squareInput(double value) {
     return Math.copySign(value * value, value);
+  }
+
+  @Override
+  public double getTotalCurrentDrawn() {
+    return PowerController.getCurrentDrawnFromPDP(fLeftMotorPort, fRightMotorPort, bLeftMotorPort, bRightMotorPort);
   }
 }
