@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.tank.DriveTankCommand;
-import frc.robot.odometry.Odometry;
 import frc.robot.commands.elevator.ElevatorUpCommand;
 import frc.robot.commands.elevator.ElevatorDownCommand;
 import frc.robot.commands.elevator.ElevatorStopCommand;
@@ -51,9 +50,6 @@ public class RobotContainer {
   // Commands
   private final DriveTankCommand tankCommand;
 
-  // Odometry
-  private final Odometry odometry;
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    * 
@@ -75,9 +71,6 @@ public class RobotContainer {
 
     // Instantiate commands
     tankCommand = new DriveTankCommand(tankSubsystem, 12);
-
-    // Instantiate odometry
-    odometry = new Odometry();
 
     // Configure the button bindings
     configureButtonBindings();
