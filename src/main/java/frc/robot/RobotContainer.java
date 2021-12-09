@@ -72,6 +72,8 @@ public class RobotContainer {
     tankSubsystem = new TankSubsystem();
 
     // Instantiate commands
+    // Drive forward for 12 inches in autonomous to test the constant
+    // TODO: improve DriveTankCommand to use closed loop
     tankCommand = new DriveTankCommand(tankSubsystem, 12);
 
     // Configure the button bindings
@@ -114,7 +116,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // The robot will drive forward for 12 inches in autonomous
     return tankCommand;
   }
 }
